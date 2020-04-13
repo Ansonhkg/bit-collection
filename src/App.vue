@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>My Collection</h1>
+    <ul>
+      <li>node-sass</li>
+      <li>sass-loader</li>
+      <li>moment</li>
+      <li>material-design-icons-iconfont</li>
+    </ul>
+    <hr>
+    <h2>Date Range Picker</h2>
+    
+    <DateRangePicker />
+    <DRP/>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DateRangePicker from './components/DateRangePicker/DateRangePicker';
+import DRP from '@bit/ansonhkg.collection.faros-date-range-picker';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    DateRangePicker,
+    DRP
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
