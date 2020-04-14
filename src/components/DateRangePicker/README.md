@@ -21,6 +21,19 @@ export default{
     <DateRagenPicker />
 </template>
 ```
+## Events
+
+| Event                 | Returns |
+| ---                   | ---     |    
+| onProduceChart        | Object  |
+
+> ***onProduceChart properties***
+> | Property | Type | Example |
+> | ---      | ---  | ---     | 
+> | dayMode | Boolean | true/false |
+> | selectedStartDate | String | '2009-01-01'
+> | selectedEndDate | String | '2020-02-02'
+> | raw | Object | calendarObject
 
 ## Properties
 
@@ -38,7 +51,6 @@ export default{
 | number | Number | 1 | null |
 | unit | String | weeks | days, weeks, months, years |
 
-## Output
 
 ## Test Cases
 - Shortcut should reset after calendar dates is clicked
