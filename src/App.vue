@@ -32,6 +32,11 @@ export default {
           title: 'FOO - SHORTCUT 1',
           number: 3,
           unit: 'days'
+        },
+        {
+          title: 'FOO - SHORTCUT 2',
+          number: 3,
+          unit: 'days'
         }
       ]
     } 
@@ -45,6 +50,11 @@ export default {
       this.shortcuts = [
         {
           title: 'FOO - SHORTCUT 1',
+          number: 3,
+          unit: 'days'
+        },
+        {
+          title: 'FOO - SHORTCUT 2',
           number: 3,
           unit: 'days'
         }

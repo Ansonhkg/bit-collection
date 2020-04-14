@@ -112,7 +112,7 @@ export default {
             default: moment().format('YYYY-MM-DD')
         },
         demo:{
-            default: true
+            default: false
         },
         shortcuts: {},
     },
