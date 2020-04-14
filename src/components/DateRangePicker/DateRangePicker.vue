@@ -114,7 +114,14 @@ export default {
         demo:{
             default: true
         },
-        shortcuts:{}
+        shortcuts: {},
+    },
+    watch:{
+        // this method is used because we are storing local shorts variable
+        // instead of the prop
+        shortcuts(value){
+            this.local_shortcuts =  value
+        }
     },
     data(){
         return {
@@ -134,12 +141,12 @@ export default {
             // ---- stays local
             local_shortcuts: this.shortcuts != null ? this.shortcuts : [
                 {
-                    title: 'One Day By Half Hour',
+                    title: 'Foo By Half Hour',
                     number: null,
                     unit: null,
                 },
                 {
-                    title: 'One Week by Half Hour',
+                    title: 'Bar by One Week',
                     number: 1,
                     unit: 'weeks'
                 }
