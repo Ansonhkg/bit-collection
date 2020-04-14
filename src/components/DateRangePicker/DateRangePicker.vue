@@ -62,12 +62,37 @@
         </div>
 
         <!-- demo results -->
-        <div v-if="demo">
-            v.0.0.6 <br>
-            scopeStart: {{ scopeStart }} <br>
-            scopeEnd: {{ scopeEnd }} <br>
-            validations: {{ validations }} <br>
-            calendarObject: <pre>{{ calendar }}</pre> <br>
+        <div class="demo" v-if="demo">
+            <table>
+                <tr>
+                    <th colspan="3">v.1.0.0</th>
+                </tr>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                </tr>
+                <tr>
+                    <td>scopeStart</td>
+                    <td>String</td>
+                    <td>{{ scopeStart }}</td>
+                </tr>
+                <tr>
+                    <td>scopeEnd</td>
+                    <td>String</td>
+                    <td>{{ scopeEnd }}</td>
+                </tr>
+                <tr>
+                    <td>validations</td>
+                    <td>Array</td>
+                    <td>{{ validations }}</td>
+                </tr>
+                <tr>
+                    <td>calendar</td>
+                    <td>Object</td>
+                    <td class="demo-code">{{ calendar }}</td>
+                </tr>
+            </table>
         </div>
 
     </div>
@@ -289,11 +314,11 @@ export default {
          * Event:: when produce chart button is selected
          */
         onProduceChart(){
-            console.log("Clicked");
             var composed_object = {
                 dayMode: this.calendar.selection.endDate == '',
                 selectedStartDate: this.calendar.selection.startDate,
-                selectedEndDate: this.calendar.selection.endDate
+                selectedEndDate: this.calendar.selection.endDate,
+                raw: this.calendar
             }
             console.log(composed_object);
 
@@ -386,5 +411,20 @@ export default {
 <style lang="scss">
 @import '~material-design-icons-iconfont/dist/material-design-icons.css';
 @import './style.scss';
-
+.demo{
+    font-family: 'Consolas';
+    font-size: 13px;
+    th, td{
+        padding: 10px;
+        border: 0px whitesmoke solid;
+        background: #1e1e1e;
+        color: white;
+    }
+    .demo-code{
+        font-size: 12px;
+        background: #1e1e1e;
+        color: #9cdcfe;
+        text-shadow: 0px 1px 0px #1e1e83;
+    }
+}
 </style>

@@ -10,7 +10,14 @@
     <hr>
     <h2>Date Range Picker</h2>
     
-    <DateRangePicker />
+    <DateRangePicker 
+      :shortcuts="[{
+        title: 'One Day by xxx',
+        number: 3,
+        unit: 'days'
+      }]"
+      :demo="true"
+    />
     <!-- <DRP/> -->
 
   </div>
