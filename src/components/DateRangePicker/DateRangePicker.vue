@@ -56,9 +56,11 @@
         </div>
 
         <!-- ========== produce chart ========== -->
-        <div v-if="calendar.selection.startDate !== ''" class="drp-produce-chart">
-            <div class="drp-produce-chart__selected-dates">{{ calendar.selection.startDate | uk_format}}{{ (calendar.selection.endDate) != '' ? ' ~ ' : '' }}{{ calendar.selection.endDate | uk_format}}</div>
-            <div @click="onProduceChart">Produce Chart</div>
+        <div @click="onProduceChart">
+            <div v-if="calendar.selection.startDate !== ''" class="drp-produce-chart">
+                <div class="drp-produce-chart__selected-dates">{{ calendar.selection.startDate | uk_format}}{{ (calendar.selection.endDate) != '' ? ' ~ ' : '' }}{{ calendar.selection.endDate | uk_format}}</div>
+                <div>Produce Chart</div>
+            </div>
         </div>
 
         <!-- demo results -->
