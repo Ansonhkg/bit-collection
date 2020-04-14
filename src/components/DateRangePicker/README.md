@@ -6,7 +6,7 @@ import DateRangePicker from '@bit/ansonhkg.collection.faros-date-range-picker';
 
 ```html
 <template>
-    <DateRagenPicker/>
+    <DateRagenPicker />
 </template>
 ```
 
@@ -14,6 +14,13 @@ import DateRangePicker from '@bit/ansonhkg.collection.faros-date-range-picker';
 
 | Property    | Type    | example |
 | ---         | ---     | ---     |
-| scopeStart  | String  |
-| scopeEnd    | String  |  
-| demo        | Boolean |
+| demo        | Boolean | true or false
+| scopeStart  | String  | '2019-01-01'
+| scopeEnd    | String  | '2020-01-01'
+| shortcuts   | Object  | 
+
+## Output
+
+## Test Cases
+- Shortcut should reset after calendar dates is clicked
+- Day dates should reset after a shortcut is clicked

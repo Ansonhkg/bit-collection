@@ -1,7 +1,7 @@
 <template>
     <div class="drp">
 
-        <!-- shortcuts wrapper -->
+        <!-- ========== shortcuts wrapper ========== -->
         <div class="drp-shortcuts">
             <!-- title -->
             <div class="drp-shortcuts__title">
@@ -11,22 +11,15 @@
             <!-- shortcuts -->
             <ul class="drp-shortcuts__list">
                 
-                <!-- shortcut -->
-                <li class="drp-shortcuts__list__item drp-shortcuts__list__item--active">
-                    <div class="drp-shortcuts__list__item__title">One Day By Half Hour</div>
-                    <div class="drp-shortcuts__list__item__date">26 Feb 2020</div>
-                </li>
-
-                <!-- shortcut -->
-                <li class="drp-shortcuts__list__item">
-                    <div class="drp-shortcuts__list__item__title">One Week By Half Hour</div>
-                    <div class="drp-shortcuts__list__item__date">26 Feb 2020</div>
+                <li v-for="(item, idx) in local_shortcuts" :key="idx" class="drp-shortcuts__list__item" @click="onShortcut(item)" :class="{'drp-shortcuts__list__item--active': item.title == selectedShortcut.title }">
+                    <div class="drp-shortcuts__list__item__title">{{ item.title }}</div>
+                    <div class="drp-shortcuts__list__item__date">{{ scopeEnd | uk_format }}</div>
                 </li>
             </ul>
 
         </div>
 
-        <!-- calendar -->
+        <!-- ========== calendar ========== -->
         <div class="drp-calendar">
         
             <!-- header -->
@@ -36,7 +29,7 @@
                 
                 <div class="drp-calendar__header__results">
                     <div class="drp-calendar__header__results--month">
-                        <span>{{ calendarMonth }}</span>
+                        <span>{{ calendar.month }}</span>
                     </div>
                 </div>
                 <i @click="onShiftCalendar('next_month')" class="material-icons">chevron_right</i>
@@ -50,7 +43,7 @@
                     <li v-for="day in getCalendarWeekDays('dd')" :key="day" class="drp-calendar__dates--weekday"><span>{{ day }}</span></li>
 
                     <!-- days -->
-                    <ul v-for="(dayObj, idx) in calendarDates" :key="idx" >
+                    <ul v-for="(dayObj, idx) in calendar.dates" :key="idx" >
                         <!-- if not enabled -->
                         <li v-if="!dayObj.enabled" class="drp-calendar__dates--disabled"><span>-</span></li>
 
@@ -62,17 +55,19 @@
 
         </div>
 
-        <!-- produce chart -->
-        <div v-if="selectedStartDate !== ''" class="drp-produce-chart">
-            <div class="drp-produce-chart__selected-dates">{{ selectedStartDate | uk_format}}{{ (selectedEndDate) != '' ? ' ~ ' : '' }}{{ selectedEndDate | uk_format}}</div>
-            <div @click="onSelectProduceChart">Produce Chart</div>
+        <!-- ========== produce chart ========== -->
+        <div v-if="calendar.selection.startDate !== ''" class="drp-produce-chart">
+            <div class="drp-produce-chart__selected-dates">{{ calendar.selection.startDate | uk_format}}{{ (calendar.selection.endDate) != '' ? ' ~ ' : '' }}{{ calendar.selection.endDate | uk_format}}</div>
+            <div @click="onProduceChart">Produce Chart</div>
         </div>
 
         <!-- demo results -->
         <div v-if="demo">
+            v.0.0.6 <br>
             scopeStart: {{ scopeStart }} <br>
             scopeEnd: {{ scopeEnd }} <br>
-            calendarDates: {{ calendarDates }} <br>
+            validations: {{ validations }} <br>
+            calendarObject: <pre>{{ calendar }}</pre> <br>
         </div>
 
     </div>
@@ -92,25 +87,51 @@ export default {
         },
         demo:{
             default: true
+        },
+        shortcuts:{
+            default: null
         }
     },
     data(){
         return {
-            shortcuts:{
-                
-            },
+
+            // ---- export variables upon emittion
             // calendar dates
-            calendarDates: [],
-            calendarMonth: '', // Feb 2020
-            selectedStartDate: '',
-            selectedEndDate: '',
-            selectedCounter: 0,
+            calendar:{
+                dates: [],
+                month: '', // Feb 2020
+                selection:{
+                    startDate: '',
+                    endDate: '',
+                    counter: 0,
+                }
+            },
+
+            // ---- stays local
+            local_shortcuts: this.shortcuts != null ? this.shortcuts : [
+                {
+                    title: 'One Day By Half Hour',
+                    number: null,
+                    unit: null,
+                },
+                {
+                    title: 'One Week by Half Hour',
+                    number: 1,
+                    unit: 'weeks'
+                }
+            ],
+
+            // shortcuts
+            selectedShortcut: '',
+
+            // validations
+            validations:[]
         }
     },
     created(){
         // --- set default calendar dates
-        this.calendarDates = this.getCalendarDates(this.scopeEnd);
-        this.calendarMonth = this.getCalendarMonth(this.scopeEnd);
+        this.calendar.dates = this.getCalendarDates(this.scopeEnd);
+        this.calendar.month = this.getCalendarMonth(this.scopeEnd);
     },
     methods:{
 
@@ -181,6 +202,27 @@ export default {
         },
 
         /**
+         * Get the selected class (selected or in-range)
+         * @param { Object } dayObj
+         * @param { Boolean } dayObj.enabled
+         * @param { String } dayObj.date
+         * @returns { String } classes to be injected to the selected element
+         */
+        getSelectedDayClass(dayObj){
+            var date = dayObj.date
+
+            // selected dates
+            if(date == this.calendar.selection.startDate || date == this.calendar.selection.endDate){
+                return {'drp-calendar__dates--selected' : true}
+            }
+
+            // dates in range
+            if(moment(date).isAfter(this.calendar.selection.startDate) && moment(date).isBefore(this.calendar.selection.endDate)){
+                return {'drp-calendar__dates--in-range' : true}
+            }
+        },
+
+        /**
          * Event:: when user click on a date, sets selected day class
          * @param { Object } dayObj
          * @param { Boolean } dayObj.enabled
@@ -189,49 +231,73 @@ export default {
          */
         onSelectDayClass(dayObj){
             var date = dayObj.date
-            
+
+            // === reset shortcuts
+            this.selectedShortcut = '';
+
+            // ========== operations ==========
             // === first click
-            if(this.selectedCounter == 0){
-                this.selectedCounter += 1;
-                this.selectedStartDate = date
+            if(this.calendar.selection.counter == 0){
+
+                // == validation
+                // -- if clicked date is the same as scopeEnd date
+                if(moment(date).isSame(this.scopeEnd)){
+                    this.validations.push('secondClickPass');
+                }
+
+                this.calendar.selection.counter += 1;
+                this.calendar.selection.startDate = date
                 return
             }
 
             // === second click
             // requirement: must be greater than start date
-            if(this.selectedCounter == 1){
-
-                // validation
-                if(moment(date).isSameOrBefore(this.selectedStartDate)){
+            if(this.calendar.selection.counter == 1){
+                
+                // == validation
+                // -- if validations has second click pass
+                if(this.validations.includes('secondClickPass')){
+                    this.validations = this.validations.filter(x => x !== 'secondClickPass');
+                    reset(this);
+                    return;
+                }
+                
+                // -- if clicked date is less than start date
+                if(moment(date).isSameOrBefore(this.calendar.selection.startDate)){
                     alert('End date must be greater than start date.');
                     return;
                 }
-                this.selectedCounter += 1;
-                this.selectedEndDate = date;
+                this.calendar.selection.counter += 1;
+                this.calendar.selection.endDate = date;
                 return
             }
 
             // === reset and callback
-            if(this.selectedCounter >= 2){
-                this.selectedCounter = 0;
-                this.selectedStartDate = '';
-                this.selectedEndDate = '';
-                this.onSelectDayClass(dayObj);
+            if(this.calendar.selection.counter >= 2){
+                reset(this)
+            }
+
+            function reset(_){
+                _.calendar.selection.counter = 0;
+                _.calendar.selection.startDate = '';
+                _.calendar.selection.endDate = '';
+                _.onSelectDayClass(dayObj);
             }
         },
 
         /**
          * Event:: when produce chart button is selected
          */
-        onSelectProduceChart(){
+        onProduceChart(){
+            console.log("Clicked");
             var composed_object = {
-                dayMode: this.selectedEndDate == '',
-                selectedStartDate: this.selectedStartDate,
-                selectedEndDate: this.selectedEndDate
+                dayMode: this.calendar.selection.endDate == '',
+                selectedStartDate: this.calendar.selection.startDate,
+                selectedEndDate: this.calendar.selection.endDate
             }
             console.log(composed_object);
 
-            this.$emit('onSelectProduceChart', composed_object);
+            this.$emit('onProduceChart', composed_object);
         },
 
         /**
@@ -241,7 +307,7 @@ export default {
          */
         onShiftCalendar(shift){
 
-            var lastDay = this.calendarDates[this.calendarDates.length - 1].date;
+            var lastDay = this.calendar.dates[this.calendar.dates.length - 1].date;
             var date, newDate;
 
             switch(shift){
@@ -272,31 +338,36 @@ export default {
                 return;
             }
 
-            this.calendarDates = this.getCalendarDates(date);
-            this.calendarMonth = this.getCalendarMonth(date);
+            this.calendar.dates = this.getCalendarDates(date);
+            this.calendar.month = this.getCalendarMonth(date);
 
         },
 
         /**
-         * Get the selected class (selected or in-range)
-         * @param { Object } dayObj
-         * @param { Boolean } dayObj.enabled
-         * @param { String } dayObj.date
-         * @returns { String } classes to be injected to the selected element
+         * Event:: when shortcut is selected
+         * @param { Object } shortcut
+         * @void set selectedShortcut as item object
          */
-        getSelectedDayClass(dayObj){
-            var date = dayObj.date
-
-            // selected dates
-            if(date == this.selectedStartDate || date == this.selectedEndDate){
-                return {'drp-calendar__dates--selected' : true}
-            }
-
-            // dates in range
-            if(moment(date).isAfter(this.selectedStartDate) && moment(date).isBefore(this.selectedEndDate)){
-                return {'drp-calendar__dates--in-range' : true}
-            }
+        onShortcut(item){
+            this.selectedShortcut = item;
+            this.calendar.counter = 2;
+            this.calendar.selection.startDate = this.getShortcutStartDate(item.number, item.unit);
+            this.calendar.selection.endDate = this.scopeEnd;
         },
+
+        /**
+         * Getter:: get shortcuts start date
+         * @param { Number } number number of unit
+         * @param { String } unit days, weeks, months
+         * @return { String } of desired date
+         */
+        getShortcutStartDate(number = null, unit = null){
+            var inputFormat = 'YYYY-MM-DD';
+
+            return number == null || unit == null
+                   ? moment(this.scopeEnd, inputFormat).format(inputFormat)
+                   : moment(this.scopeEnd, inputFormat).subtract(number, unit).add(1, 'days').format(inputFormat) 
+        }
 
 
     },

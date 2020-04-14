@@ -11,19 +11,19 @@
     <h2>Date Range Picker</h2>
     
     <DateRangePicker />
-    <DRP/>
+    <!-- <DRP/> -->
 
   </div>
 </template>
 
 <script>
 import DateRangePicker from './components/DateRangePicker/DateRangePicker';
-import DRP from '@bit/ansonhkg.collection.faros-date-range-picker';
+// import DRP from '@bit/ansonhkg.collection.faros-date-range-picker';
 
 export default {
   components:{
     DateRangePicker,
-    DRP
+    // DRP
   }
 }
 </script>
