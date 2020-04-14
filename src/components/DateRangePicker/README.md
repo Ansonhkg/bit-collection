@@ -2,6 +2,18 @@
 
 ```js
 import DateRangePicker from '@bit/ansonhkg.collection.faros-date-range-picker';
+
+// vue.js
+export default{
+    components:{
+        DateRangePicker
+    }
+}
+
+// nuxt.js
+export default{
+    DateRangePicker: () => import('@bit/ansonhkg.collection.faros-date-range-picker')
+}
 ```
 
 ```html
