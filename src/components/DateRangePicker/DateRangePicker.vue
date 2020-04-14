@@ -114,9 +114,7 @@ export default {
         demo:{
             default: true
         },
-        shortcuts:{
-            default: null
-        }
+        shortcuts:{}
     },
     data(){
         return {
