@@ -12,12 +12,19 @@ import DateRangePicker from '@bit/ansonhkg.collection.faros-date-range-picker';
 
 ## Properties
 
-| Property    | Type    | example |
+| Property    | Type    | Example |
 | ---         | ---     | ---     |
 | demo        | Boolean | true or false
 | scopeStart  | String  | '2019-01-01'
 | scopeEnd    | String  | '2020-01-01'
-| shortcuts   | Object  | 
+| shortcuts   | Object  | ```[{title: 'One Day By Half Hour', number: null, unit: null}, {title: 'One Week by Half Hour', number: 1, unit: 'weeks'}]```
+
+### Shortcut Object Properties
+| Property    | Type    | Example | Options |
+| ---         | ---     | ---     | --- | 
+| title        | String | One Day By Half Hour | any |
+| number | Number | 1 | null |
+| unit | String | weeks | days, weeks, months, years |
 
 ## Output
 
