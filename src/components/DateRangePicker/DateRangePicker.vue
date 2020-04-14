@@ -63,6 +63,7 @@
 
         <!-- demo results -->
         <div class="demo" v-if="demo">
+            <h1>Details</h1>
             <table>
                 <tr>
                     <th colspan="3">v.1.0.0</th>
@@ -414,6 +415,9 @@ export default {
 .demo{
     font-family: 'Consolas';
     font-size: 13px;
+    th{
+        text-decoration: underline;
+    }
     th, td{
         padding: 10px;
         border: 0px whitesmoke solid;
