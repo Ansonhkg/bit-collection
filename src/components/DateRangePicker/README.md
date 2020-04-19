@@ -28,12 +28,12 @@ export default{
 | onProduceChart        | Object  |
 
 > ***onProduceChart properties***
-> | Property | Type | Example |
-> | ---      | ---  | ---     | 
-> | dayMode | Boolean | true/false |
-> | selectedStartDate | String | '2009-01-01'
-> | selectedEndDate | String | '2020-02-02'
-> | raw | Object | calendarObject
+> | Property  | Type    | Example    |
+> | ---       | ---     | ---        | 
+> | dayMode   | Boolean | true/false |
+> | startDate | String  | '2009-01-01'
+> | endDate   | String  | '2020-02-02'
+> | raw       | Object  | calendarObject
 
 ## Properties
 
@@ -45,11 +45,11 @@ export default{
 | shortcuts   | Object  | ```[{title: 'One Day By Half Hour', number: null, unit: null}, {title: 'One Week by Half Hour', number: 1, unit: 'weeks'}]```
 
 ### Shortcut Object Properties
-| Property    | Type    | Example | Options |
-| ---         | ---     | ---     | --- | 
-| title        | String | One Day By Half Hour | any |
-| number | Number | 1 | null |
-| unit | String | weeks | days, weeks, months, years |
+| Property     | Type    | Example              | Options                    |
+| ---          | ---     | ---                  | ---                        | 
+| title        | String  | One Day By Half Hour | any                        |
+| number       | Number  | 1                    | null                       |
+| unit         | String  | weeks                | days, weeks, months, years |
 
 
 ## Test Cases

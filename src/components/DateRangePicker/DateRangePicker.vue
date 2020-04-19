@@ -68,7 +68,7 @@
             <h1>Details</h1>
             <table>
                 <tr>
-                    <th colspan="3">v.1.0.0</th>
+                    <th colspan="3">v.1.0.6</th>
                 </tr>
                 <tr>
                     <th>Property</th>
@@ -324,8 +324,8 @@ export default {
         onProduceChart(){
             var composed_object = {
                 dayMode: this.calendar.selection.endDate == '',
-                selectedStartDate: this.calendar.selection.startDate,
-                selectedEndDate: this.calendar.selection.endDate,
+                startDate: this.calendar.selection.startDate,
+                endDate: this.calendar.selection.endDate,
                 raw: this.calendar
             }
             console.log(composed_object);

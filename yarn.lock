@@ -796,14 +796,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@bit/ansonhkg.collection.faros-date-range-picker@^0.0.1":
-  version "0.0.1"
-  resolved "https://node.bit.dev/ansonhkg.collection.faros-date-range-picker/-/ansonhkg.collection.faros-date-range-picker-0.0.1.tgz#d2f588907f7404480b16620ef0f36f61357e482f"
-  integrity sha1-0vWIkH90BEgLFmIO8PNvYTV+SC8=
-  dependencies:
-    material-design-icons-iconfont "^5.0.1"
-    moment "^2.24.0"
-
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
