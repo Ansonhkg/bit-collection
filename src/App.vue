@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+
+    <!-- header -->
     <div class="header">
       <h1>My Resuable Components</h1>
       <ul class="list">
@@ -9,6 +11,8 @@
       </ul>
     </div>
     <hr>
+
+    <!-- demo area -->
     <div class="demo-wrapper" :class="{'demo-wrapper--active' : currentDemo != ''}">
       <component 
         v-bind:is="currentDemo" 

@@ -12,6 +12,7 @@
 		<hr>
 		
 		<!-- content -->
+		<h3>Preview</h3>
 		<slot></slot>
 	</div>
 </template>
