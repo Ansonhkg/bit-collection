@@ -10,7 +10,6 @@
         </li>
       </ul>
     </div>
-    <hr>
 
     <!-- demo area -->
     <div class="demo-wrapper" :class="{'demo-wrapper--active' : currentDemo != ''}">
@@ -53,7 +52,12 @@ body{
   background: whitesmoke;
   margin: 0;
 }
+#app{
+  /* display: grid;
+  grid-template-columns: 200px calc(100% - 200px); */
+}
 .demo-wrapper{
+  margin-left: 200px;
   margin: 10px;
   background: white;
   box-shadow: 0px 0px 10px grey;
@@ -61,19 +65,27 @@ body{
   box-sizing: border-box;
   border-radius: 10px;
   transition: 0.3s all linear;
-  transform: translateY(10px);
+  transform: translateX(-10px);
   opacity: 0;
+  margin-left: 260px;
 }
 .demo-wrapper--active{
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 .header{
   background: #2C5154;
   color: white;
-  margin-top: -22px;
   padding: 10px;
   box-sizing: border-box;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+}
+.header h1{
+  font-size: 28px;
 }
 .list{
   list-style-type: none;
