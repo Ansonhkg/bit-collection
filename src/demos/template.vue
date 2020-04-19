@@ -1,9 +1,9 @@
 <template>
 	<div class="frame">
 		<!-- header -->
-		<h1>{{ settings.title }}</h1>
+		<h2>{{ settings.title }}</h2>
 		<hr>
-		<h2>Dependencies</h2>
+		<h3>Dependencies</h3>
 		<ul>
 			<li v-for="dependency in settings.dependencies" :key="dependency">
 				{{ dependency}}
