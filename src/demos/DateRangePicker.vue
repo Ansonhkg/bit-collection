@@ -1,82 +1,79 @@
 <template>
-	<MyTemplate :settings="myTemplate">
-		
-		<!-- demo -->
-		<button @click="shortcuts_1()" style="margin-right: 5px;">Shortcut 1</button>
-		<button @click="shortcuts_2()">Shortcut 2</button>
+  <MyTemplate :settings="myTemplate">
+    <!-- demo -->
+    <button @click="shortcuts_1()" style="margin-right: 5px;">Shortcut 1</button>
+    <button @click="shortcuts_2()">Shortcut 2</button>
 
-		<DateRangePicker 
-			:shortcuts="shortcuts"
-			:demo="true"
-		/>
-	</MyTemplate>
+    <DateRangePicker :shortcuts="shortcuts" :demo="true" />
+  </MyTemplate>
 </template>
 
 <script>
-import MyTemplate from './template';
-import DateRangePicker from '../components/DateRangePicker/DateRangePicker';
+import MyTemplate from "./template";
+import DateRangePicker from "../components/DateRangePicker/DateRangePicker";
 
 export default {
-  components:{
-		DateRangePicker,
-		MyTemplate
+  components: {
+    DateRangePicker,
+    MyTemplate
   },
-  data(){
+  data() {
     return {
-			// layout settings
-			myTemplate:{
-				title: 'Date Range Picker',
-				dependencies:[
-					'node-sass',
-					'sass-loader',
-					'moment',
-					'material-design-icons-iconfront'
-				],
-			},
+      // layout settings
+      myTemplate: {
+        title: "Date Range Picker",
+        dependencies: [
+          "node-sass",
+          "sass-loader",
+          "moment",
+          "material-design-icons-iconfront"
+        ],
+        github:
+          "https://github.com/Ansonhkg/bit-collection/tree/master/src/components/DateRangePicker"
+      },
 
-			// demo variables
+      // demo variables
       shortcuts: [
         {
-          title: 'FOO - SHORTCUT 1',
+          title: "FOO - SHORTCUT 1",
           number: 3,
-          unit: 'days'
+          unit: "days"
         },
         {
-          title: 'FOO - SHORTCUT 2',
+          title: "FOO - SHORTCUT 2",
           number: 3,
-          unit: 'days'
+          unit: "days"
         }
       ]
-    } 
+    };
   },
-  methods:{
-    shortcuts_1(){
+  methods: {
+    shortcuts_1() {
       this.shortcuts = [
         {
-          title: 'FOO - SHORTCUT 1',
+          title: "FOO - SHORTCUT 1",
           number: 3,
-          unit: 'days'
+          unit: "days"
         },
         {
-          title: 'FOO - SHORTCUT 2',
+          title: "FOO - SHORTCUT 2",
           number: 3,
-          unit: 'days'
+          unit: "days"
         }
-      ]
+      ];
     },
-    shortcuts_2(){
+    shortcuts_2() {
       this.shortcuts = [
         {
-          title: 'BAR - SHORTCUT 2',
+          title: "BAR - SHORTCUT 2",
           number: 5,
-          unit: 'days'
+          unit: "days"
         }
-      ]
+      ];
     }
   }
-}
+};
 </script>
 
 <style>
-
 </style>
